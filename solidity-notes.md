@@ -128,3 +128,64 @@ function add(uint _x, uint _y) public returns (uint) {
   return result;
 }
 ```
+
+
+## Addresses
+
+Accounts on Ethereum hold ETH. Each account has an address. Users with accounts have at least 1 address.
+
+All smart contracts have an address.
+
+Addresses are useful to map ownership of tokens/balances to users.
+
+
+## Mappings
+
+Mappings are key-value stores for storing and looking up data.
+
+Examples:
+```
+// For a financial app, storing a uint that holds the user's account balance:
+mapping (address => uint) public accountBalance;
+// Or could be used to store / lookup usernames based on userId
+mapping (uint => string) userIdToName;
+```
+
+## 'msg' Properties
+
+- msg.sender -> address that called the function
+
+
+## Require
+
+Require will throw an error and stop a function from executing if its condition isn't true.
+
+Require is useful to verify certain conditions before running operations in functions.
+
+```
+require(keccak256(abi.encodePacked(_name)) == keccak256(abi.encodePacked("Vitalik")));
+
+//this will only return true and continue the function if the _name passed in was "Vitalik"
+```
+
+## Inheritance
+
+Inheritance gives a contract access to any public functions in the contract it's inheriting from.
+
+E.g. contract A is B {} -> A will get all B's public functions.
+
+Helps create logic subclasses like Animal and Cat. Also helps to share common logic between many contracts.
+
+```
+contract Doge {
+  function catchphrase() public returns (string memory) {
+    return "So Wow CryptoDoge";
+  }
+}
+
+contract BabyDoge is Doge {
+  function anotherCatchphrase() public returns (string memory) {
+    return "Such Moon BabyDoge";
+  }
+}
+```
