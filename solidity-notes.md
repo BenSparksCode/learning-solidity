@@ -1,3 +1,5 @@
+# Solidity Notes
+
 ## Variables
 
 ### State Variables
@@ -108,4 +110,21 @@ uint8 b = 2
 uint8 c = a * b //throws an error because returns uint, not uint8
 
 uint8 d = uint8(a) * b //works
+```
+
+
+## Events
+
+For communicating when things are triggered/happening in your contract, to external listeners (e.g. frontends).
+
+```
+// declare the event
+event IntegersAdded(uint x, uint y, uint result);
+
+function add(uint _x, uint _y) public returns (uint) {
+  uint result = _x + _y;
+  // fire an event to let the app know the function was called:
+  emit IntegersAdded(_x, _y, result);
+  return result;
+}
 ```
