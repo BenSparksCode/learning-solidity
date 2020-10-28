@@ -10,10 +10,28 @@ uint myUint = 100;
 ### Variable Storage:
 
 - state variables are always in storage (on the blockchain)
-- function arguments are always in memory
+- function arguments are always in memory -> uses the 'memory' keyword
 - local variables of struct, array or mapping type reference storage by default
 - local variables of value type (i.e. neither array, nor struct nor mapping) are stored in the stack
 
+Be explicit about memory vs storage when dealing with **structs and arrays**. 
+
+```
+Sandwich[] sandwiches;
+
+function eatSandwich(uint _index) public {
+    Sandwich mySandwich = sandwiches[_index];
+    //^ WRONG!
+
+    Sandwich storage mySandwich = sandwiches[_index];
+    //^ CORRECT - gives you pointer to storage item in array
+    //you can then modify that item in the array in storage
+
+    Sandwich memory newSandwich = sandwiches[_index];
+    //Will give you a new copy of that item in the storage array
+    //But this copy only stored in memory
+}
+```
 
 ## Math Operations
 
@@ -188,4 +206,48 @@ contract BabyDoge is Doge {
     return "Such Moon BabyDoge";
   }
 }
+```
+
+## Internal and External
+
+- internal -> like private, but also makes function/var accessible to contracts inheriting the host contract
+- external -> like public, but functions can only be called from outside the contract
+
+## Interfaces
+
+For defining how your contract will interact with another contract.
+
+Only need to specify the parts of the contract you will interact with.
+
+### Defining Interfaces
+
+E.g. Target Contract:
+```
+contract LuckyNumber {
+  mapping(address => uint) numbers;
+
+  function setNum(uint _num) public {
+    numbers[msg.sender] = _num;
+  }
+
+  function getNum(address _myAddress) public view returns (uint) {
+    return numbers[_myAddress];
+  }
+}
+```
+
+Interface to use getNum in target contract:
+```
+contract NumberInterface {
+  function getNum(address _myAddress) public view returns (uint);
+}
+```
+
+### Interacting via Interfaces
+
+Instantiate the interface by passing in the contract address as an argument.
+
+```
+address NumberAddress = 0x1234567891011
+NumberInterface numContract = NumberInterface(NumberAddress)
 ```
