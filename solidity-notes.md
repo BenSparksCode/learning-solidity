@@ -101,4 +101,11 @@ Keccak256 expects a single parameter of type 'bytes'.
 
 ## Typecasting
 
+```
+uint a = 5
+uint8 b = 2
 
+uint8 c = a * b //throws an error because returns uint, not uint8
+
+uint8 d = uint8(a) * b //works
+```
