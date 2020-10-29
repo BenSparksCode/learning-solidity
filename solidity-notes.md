@@ -273,3 +273,29 @@ The '_;' statement in a modifier tells Solidity where the rest of the modified f
   }
 ```
 
+## Gas Optimization
+
+### Struct Packing
+
+Usually a uint8 won't save you gas over a uint256. Except in structs.
+
+Struct packing tips:
+ - Use smallest integer subtypes you can get away with.
+ - Put same types and subtypes next to each other in code.
+
+E.g.
+```
+struct A { 
+    uint32 a;
+    uint b;
+    uint32 c;
+}
+
+// Is less efficient than
+
+struct B { 
+    uint32 a;
+    uint32 b;
+    uint c;
+}
+```
