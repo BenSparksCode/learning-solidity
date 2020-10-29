@@ -64,12 +64,32 @@ struct Person {
 }
 ```
 
+When passing a struct into a function as an argument, use the 'storage' keyword to pass a pointer to the struct in blockchain storage. 
+
 ### Arrays
 
 ```
 uint[2] fixedArr; //Fixed array
 uint[] dynamicArr; //Dynamic array
 ```
+
+If an external function returns an array, it would look like this:
+
+```
+function getArray() external pure returns(uint[] memory) {
+  // Instantiate a new array in memory with a length of 3
+  uint[] memory values = new uint[](3);
+
+  // Put some values to it
+  values[0] = 1;
+  values[1] = 2;
+  values[2] = 3;
+
+  return values;
+}
+```
+
+This is because it is cheaper to create a new array with a loop in node memory and send it back to the external caller, than to use the default storage option which write data to the blockchain and costs a lot of gas.
 
 
 ## Functions
@@ -168,6 +188,10 @@ mapping (address => uint) public accountBalance;
 // Or could be used to store / lookup usernames based on userId
 mapping (uint => string) userIdToName;
 ```
+
+## For Loops
+
+
 
 ## 'msg' Properties
 
@@ -273,6 +297,25 @@ The '_;' statement in a modifier tells Solidity where the rest of the modified f
   }
 ```
 
+### Function Modifiers with Args
+
+Could have a modifier that takes args, and use it in a function.
+
+```
+modifier olderThan(uint _age, uint _userId) {
+  require(age[_userId] >= _age);
+  _;
+}
+```
+
+then use this modifier as follows:
+
+```
+function driveCar(uint _userId) public olderThan(16, _userId) {
+  // Some function logic
+}
+```
+
 ## Gas Optimization
 
 ### Struct Packing
@@ -299,3 +342,32 @@ struct B {
     uint c;
 }
 ```
+
+### External View Functions
+
+'external view' functions don't cost any gas when called externally by a user - because they ony read data, and don't change anything on the blockchain.
+
+The Web3 library only queries the Ethereum node for the data, and doesn't create a blockchain transaction.
+
+Internally called 'view' functions will still cost gas. 
+
+## Unix Timestamp
+
+'now' in Solidity will return the current Unix time.
+
+Solidity also has the following constants to convert a uint to the appropriate number of seconds:
+
+- seconds
+- minutes
+- hours
+- days
+- weeks
+- years
+
+
+## Security
+
+### Tips
+
+- Examine all public and external functions (callable by anyone) and think of ways people could abuse them.
+- 
