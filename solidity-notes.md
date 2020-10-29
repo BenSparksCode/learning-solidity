@@ -251,3 +251,25 @@ Instantiate the interface by passing in the contract address as an argument.
 address NumberAddress = 0x1234567891011
 NumberInterface numContract = NumberInterface(NumberAddress)
 ```
+
+## OpenZeppelin
+
+OpenZeppelin is a library of secure and community-vetted smart contracts that you can use in your own dApps.
+
+### Ownable
+
+- Sets the contract owner when deployed -> owner is the address that deploys contract
+- onlyOwner modifier -> modifies a function such that only the owner can call it
+- contains a function to transfer ownership to a new address
+
+### onlyOwner Modifier
+
+The '_;' statement in a modifier tells Solidity where the rest of the modified function's code should run, in relation to the modifier's code. 
+
+```
+  modifier onlyOwner() {
+    require(isOwner());
+    _;
+  }
+```
+
