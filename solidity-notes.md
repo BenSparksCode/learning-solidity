@@ -125,10 +125,13 @@ function _multi(uint a, uint b) private pure returns (uint) {
 
 ### Function Modifiers
 
-- public -> Solidity creates a getter for the var automatically, callable by anyone
-- private -> Only callable within your contract by other functions. Private function names usually start with '_'
+- public -> Solidity creates a getter for the var automatically, callable by anyone and from any contract.
+- external -> function is callable by anyone outside of the contract, not from within contract though.
+- internal -> function is callable from within contract and any contracts that inherit from this contract. 
+- private -> Only callable within your contract by other functions within the same contract (not inheriting ones). Private function names usually start with '_'
 - view -> doesn't change or write any state
 - pure -> doesn't read, modify, or write state. Only works with data passed in.
+- payable -> allows function to recieve Ether. 
 
 
 ## Keccak256
@@ -236,6 +239,31 @@ contract BabyDoge is Doge {
 
 - internal -> like private, but also makes function/var accessible to contracts inheriting the host contract
 - external -> like public, but functions can only be called from outside the contract
+
+## Payable
+
+Modifier that allows a function to accept Ether as payment.
+
+This allows all the financial innovation happening on Ethereum - you can programmatically make things happen when certain amounts of assets are received.
+
+- msg.value -> the variable showing the amount sent
+- ether -> primitive to denote the ETH asset unit in Solidity.
+
+```
+require(msg.value == 1 ether)
+```
+
+To cast an address to an address payable:
+
+```
+address payable addr2 = address(uint160(addr1))
+```
+
+To transfer money to an address payable:
+
+```
+addr2.transfer(address(this).balance)
+```
 
 ## Interfaces
 
@@ -363,6 +391,18 @@ Solidity also has the following constants to convert a uint to the appropriate n
 - days
 - weeks
 - years
+
+## Random Numbers
+
+The best built-in way to do random numbers in Solidity is with keccak256. Oracles could be another solution, bringing externally generated random numbers.
+
+Something like this could implement psuedo-random number generation:
+```
+function randMod(uint _modulus) internal returns(uint) {
+    randNonce++;
+    return uint(keccak256(abi.encodePacked(now, msg.sender, randNonce))) % _modulus;
+}
+```
 
 
 ## Security
