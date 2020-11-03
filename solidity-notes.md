@@ -410,4 +410,21 @@ function randMod(uint _modulus) internal returns(uint) {
 ### Tips
 
 - Examine all public and external functions (callable by anyone) and think of ways people could abuse them.
-- 
+
+
+
+## Tokens
+
+A token standard is just a smart contract with standard functions that define how to interact with that type of token. 
+
+### ERC-20 Tokens
+
+[ERC-20](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) is an Ethereum standard for **fungible** tokens.
+
+Because all ERC20 tokens follow this standard, exchanges and other services can build features that are compatible with any ERC20 token.
+
+### ERC-721 Tokens
+
+[ERC-721](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) is an Ethereum standard for **non-fungible** tokens (NFTs).
+
+Each NFT token has its own unique ID. NFTs are not divisible, and can only be traded as whole units.
