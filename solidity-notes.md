@@ -410,7 +410,23 @@ function randMod(uint _modulus) internal returns(uint) {
 ### Tips
 
 - Examine all public and external functions (callable by anyone) and think of ways people could abuse them.
+- Use SafeMath by OpenZeppelin for maths to prevent over/underflows
 
+
+### Preventing Overflows and Underflows
+
+An overflow is when a number exceeds the largest amount a variable can store. If this happens, the value will loop back to the lowest number the variable can store.
+
+SafeMath is a library that helps prevent this.
+
+A library can be implemented as follows, to attach functions to native data types:
+
+```
+using SafeMath for uint256;
+
+uint256 a = 5;
+uint256 b = a.add(4);
+```
 
 
 ## Tokens
