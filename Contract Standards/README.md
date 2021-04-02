@@ -7,8 +7,8 @@
 
 ## ERC721
 
-- [OpenZeppelin Repo]()
-- [OpenZeppelin Docs]()
+- [OpenZeppelin Repo](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC721)
+- [OpenZeppelin Docs](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721)
 
 ## ERC1155
 
