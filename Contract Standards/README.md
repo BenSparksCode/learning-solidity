@@ -12,5 +12,5 @@
 
 ## ERC1155
 
-- [OpenZeppelin Repo]()
-- [OpenZeppelin Docs]()
+- [OpenZeppelin Repo](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC1155)
+- [OpenZeppelin Docs](https://docs.openzeppelin.com/contracts/4.x/api/token/erc1155)
