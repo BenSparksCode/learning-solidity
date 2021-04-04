@@ -4,40 +4,32 @@ pragma solidity ^0.7.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Token is ERC20 {
-    mapping(address => bool) minters;
-    address internal original;
+    address public deployer;
+    mapping(address => bool) public minters;
 
-    constructor() ERC20("Token", "TKR") {
-        minters[msg.sender] = true;
-        original = msg.sender;
+    constructor() {
+        deployer = msg.sender;
     }
 
-    modifier isMinter() {
-        require(
-            minters[msg.sender],
-            "Caller must be minter"
-        );
-        _;
+    function addMinter(address _minter) public onlyDeployer {
+        minters[_minter] = true;
     }
 
-    modifier isOriginal() {
-        require(
-            msg.sender == original,
-            "Caller must be minter"
-        );
-        _;
-    }
-
-    function addMinter(address _newMinter) public isOriginal() {
-        minters[_newMinter] = true;
-    }
-
-    function mint(uint256 _amount, address _to) public isMinter() {
+    function mint(uint256 _amount, address _to) public onlyMinter {
         _mint(_to, _amount);
     }
 
-    function burn(uint256 _amount, address _to) public isMinter() {
-        _burn(_to, _amount);
+    function burn(uint256 _amount, address _from) public onlyMinter {
+        _burn(_from, _amount);
     }
 
+    modifier onlyDeployer() {
+        require(msg.sender == deployer, "U r not deployr");
+        _;
+    }
+
+    modifier onlyMinter() {
+        require(minters[msg.sender] == true, "U r not mintr");
+        _;
+    }
 }
