@@ -12,6 +12,16 @@ contract Token is ERC20 {
         minters[msg.sender] = true;
     }
 
+    modifier onlyDeployer() {
+        require(msg.sender == deployer, "U r not deployr ser");
+        _;
+    }
+
+    modifier onlyMinter() {
+        require(minters[msg.sender], "U r not mintr ser");
+        _;
+    }
+
     function addMinter(address _minter) public onlyDeployer {
         minters[_minter] = true;
     }
@@ -22,15 +32,5 @@ contract Token is ERC20 {
 
     function burn(address _from, uint256 _amount) public onlyMinter {
         _burn(_from, _amount);
-    }
-
-    modifier onlyDeployer() {
-        require(msg.sender == deployer, "U r not deployr ser");
-        _;
-    }
-
-    modifier onlyMinter() {
-        require(minters[msg.sender], "U r not mintr ser");
-        _;
     }
 }
