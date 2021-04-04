@@ -15,11 +15,11 @@ contract Curve {
     }
 
     function buyPrice(uint256 _amount) public view returns (uint256) {
-        return 1; //TODO
+        return calcIntegral(Token.totalSupply(), Token.totalSupply()+_amount);
     }
 
     function sellReward(uint256 _amount) public view returns (uint256) {
-        return 1; //TODO
+        return calcIntegral(Token.totalSupply()-_amount, Token.totalSupply());
     }
 
     function collateralToken() public view returns (address) {
