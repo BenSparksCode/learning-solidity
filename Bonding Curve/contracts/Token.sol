@@ -7,29 +7,30 @@ contract Token is ERC20 {
     address public deployer;
     mapping(address => bool) public minters;
 
-    constructor() {
+    constructor() ERC20("Bonding Curve Token","BCT") {
         deployer = msg.sender;
+        minters[msg.sender] = true;
     }
 
     function addMinter(address _minter) public onlyDeployer {
         minters[_minter] = true;
     }
 
-    function mint(uint256 _amount, address _to) public onlyMinter {
+    function mint(address _to, uint256 _amount) public onlyMinter {
         _mint(_to, _amount);
     }
 
-    function burn(uint256 _amount, address _from) public onlyMinter {
+    function burn(address _from, uint256 _amount) public onlyMinter {
         _burn(_from, _amount);
     }
 
     modifier onlyDeployer() {
-        require(msg.sender == deployer, "U r not deployr");
+        require(msg.sender == deployer, "U r not deployr ser");
         _;
     }
 
     modifier onlyMinter() {
-        require(minters[msg.sender] == true, "U r not mintr");
+        require(minters[msg.sender], "U r not mintr ser");
         _;
     }
 }
